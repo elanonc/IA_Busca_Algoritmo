@@ -22,6 +22,7 @@ MAPEAMENTO DAS CIDADES
 19 - Neamt
 */
 
+#include "graph.h"
 #include <iostream>
 #include <list>
 #include <utility> // pair

@@ -1,7 +1,5 @@
 #include <iostream>
-#include <utility> // pair
 #include "grafo.h"
-
 // MAPEAMENTO DAS CIDADES
 
 #define Arad 0
@@ -29,31 +27,31 @@ using namespace std;
 
 int main()
 {
+    Grafo g;
     int nVertice = 20; // numero de vertices
-    adicionar(0, 1, 75);
-    /*
-    adicionar(Arad, Sibiu, 140);
-    adicionar(Arad, Timisoare, 118);
-    adicionar(Zerind, Oradea, 71);
-    adicionar(Sibiu, Fagaras, 90);
-    adicionar(Sibiu, RimnicuVilcea, 80);
-    adicionar(Timisoare, Lugej, 111);
-    adicionar(Oradea, Sibiu, 151);
-    adicionar(Fagaras, Bucharest, 211);
-    adicionar(RimnicuVilcea, Pitesti, 97);
-    adicionar(RimnicuVilcea, Craiova, 146);
-    adicionar(Lugej, Mehadia, 70);
-    adicionar(Bucharest, Giurglu, 90);
-    adicionar(Bucharest, Urziceni, 85);
-    adicionar(Pitesti, Bucharest, 101);
-    adicionar(Craiova, Pitesti, 138);
-    adicionar(Mehadia, Dobreta, 75);
-    adicionar(Dobreta, Craiova, 120);
-    adicionar(Urziceni, Vaslui, 142);
-    adicionar(Urziceni, Mirsove, 98);
-    adicionar(Mirsove, Eforie, 86);
-    adicionar(Vaslui, lasi, 92);
-    adicionar(lasi, Neamt, 97);
-    //listaAdj = constroiGrafo(nVertice);
-    //imprimirGrafo(nVertice);*/
+    g.adicionar(Arad, Zerind, 75);
+    g.adicionar(Arad, Sibiu, 140);
+    g.adicionar(Arad, Timisoare, 118);
+    g.adicionar(Zerind, Oradea, 71);
+    g.adicionar(Sibiu, Fagaras, 90);
+    g.adicionar(Sibiu, RimnicuVilcea, 80);
+    g.adicionar(Timisoare, Lugej, 111);
+    g.adicionar(Oradea, Sibiu, 151);
+    g.adicionar(Fagaras, Bucharest, 211);
+    g.adicionar(RimnicuVilcea, Pitesti, 97);
+    g.adicionar(RimnicuVilcea, Craiova, 146);
+    g.adicionar(Lugej, Mehadia, 70);
+    g.adicionar(Bucharest, Giurglu, 90);
+    g.adicionar(Bucharest, Urziceni, 85);
+    g.adicionar(Pitesti, Bucharest, 101);
+    g.adicionar(Craiova, Pitesti, 138);
+    g.adicionar(Mehadia, Dobreta, 75);
+    g.adicionar(Dobreta, Craiova, 120);
+    g.adicionar(Urziceni, Vaslui, 142);
+    g.adicionar(Urziceni, Mirsove, 98);
+    g.adicionar(Mirsove, Eforie, 86);
+    g.adicionar(Vaslui, lasi, 92);
+    g.adicionar(lasi, Neamt, 97);
+    g.imprimirGrafo(nVertice);
+    return 0;
 }

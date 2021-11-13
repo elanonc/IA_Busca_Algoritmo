@@ -5,11 +5,19 @@
 #include <list>
 #include <utility> // pair
 #include <vector>
+#include <queue>
+
 #define TAMANHO 100
 
 using namespace std;
 
-void adicionar(int cidade1, int cidade2, double peso);
-void imprimirGrafo(int nVertice);
+class Grafo
+{
+public:
+    
+    void adicionar(int cidade1, int cidade2, double peso);
+    void imprimirGrafo(int nVertice);
+    void buscaEmLargura();
+};
 
 #endif

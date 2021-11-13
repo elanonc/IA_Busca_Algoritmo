@@ -40,6 +40,7 @@ void printaGrafo(vector<list<pair<int, int>>> listaAdj, int nVertice)
             cout << "[" << j.first << " " << j.second << "km] ";
         }
         cout << endl;
+        cout << endl;
     }
 }
 

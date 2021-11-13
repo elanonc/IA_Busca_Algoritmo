@@ -1,26 +1,23 @@
-/*
-MAPEAMENTO DAS CIDADES
-0 - Oradea
-1 - Zerind
-2 - Arad
-3 - Sibiu
-4 - Fagaras
-5 - Timisoara
-6 - Rimnicu Vilcea
-7 - Lugoj
-8 - Pitesti
-9 - Mehadia
-10 - Drobeta
-11 - Craiova
-12 - Giurgiu
-13 - Eforie
-14 - Bucharest
-15 - Urziceni
-16 - Hirsova
-17 - Vaslui
-18 - Iasi
-19 - Neamt
-*/
+#define Oradea 0
+#define Zerind 1
+#define Arad 2
+#define Sibiu 3
+#define Fagaras 4
+#define Timisoara 5
+#define Rimnicu Vilcea 6 
+#define Lugoj 7
+#define Pitesti 8
+#define Mehadia 9
+#define Drobeta 10
+#define Craiova 11
+#define Giurgiu 12
+#define Eforie 13
+#define Bucharest 14
+#define Urziceni 15
+#define Hirsova 16
+#define Vaslui 17
+#define Iasi 18
+#define Neamt 19
 
 #include "graph.h"
 #include <iostream>

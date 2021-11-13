@@ -23,7 +23,7 @@ void Grafo::imprimirGrafo(int nVertice)
     for (int i = 0; i < nVertice; i++)
     {
         cout << i << ": ";
-        for (auto j : this->listaAdj[i])
+        for (auto j : listaAdj[i])
         {
             cout << "[" << j.first << "km, " << j.second << "] ";
         }
@@ -34,26 +34,28 @@ void Grafo::imprimirGrafo(int nVertice)
 
 void Grafo::buscaEmLargura(int raiz, int destino)
 {
-    static queue<caminho> q;
-    int cnt = 0;
-    /*
-    for (int v = raiz; v < listaAdj[v]; ++v)
-    {
-        /*
-        num[v] = pa[v] = -1;
-        QUEUEinit(G->V);
-        num[s] = cnt++;
-        pa[s] = s;
-        QUEUEput(s);
-    }*/
+    bool *visitado = new bool[tam];
+    for (int i = 0; i < tam; i++)
+        visitado[i] = false;
+    queue<int> fila;
+    visitado[raiz] = true;
+    fila.push(raiz);
 
-    if (raiz == destino)
+    while (!fila.empty())
     {
+        raiz = fila.front();
+        cout << raiz << " ";
+        fila.pop();
+        list<pair<double, int>> lista = listaAdj[raiz];
+        for (auto j : lista)
+        {
+            int val = j.second;
+            if (!visitado[val])
+            {
+                visitado[val] = true;
+                fila.push(val);
+            }
+        }
     }
-
-    while (!q.empty())
-    { /* Expand every node in the queue(open set). */
-        //int p = q.front();
-        q.pop(); /* Pop this node off the queue, */
-    }
+    cout << endl;
 }

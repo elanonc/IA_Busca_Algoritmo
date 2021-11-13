@@ -27,8 +27,8 @@ using namespace std;
 
 int main()
 {
-    Grafo g;
     int nVertice = 20; // numero de vertices
+    Grafo g(nVertice);
     g.adicionar(Arad, Zerind, 75);
     g.adicionar(Arad, Sibiu, 140);
     g.adicionar(Arad, Timisoare, 118);

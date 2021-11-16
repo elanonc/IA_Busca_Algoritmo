@@ -18,7 +18,7 @@ public:
     string vertice;
 
     list<pair<int, double>> vizinhos;
-    VerticeGrafo(int valor, string vertice, double peso)
+    VerticeGrafo(int valor, string vertice)
     {
         this->valor = valor;
         this->vertice = vertice;

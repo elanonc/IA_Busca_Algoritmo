@@ -27,13 +27,13 @@ void Grafo::adicionar(string vertice1, string vertice2, int valor1, int valor2, 
     VerticeGrafo *v1 = listaAdj[valor1], *v2 = listaAdj[valor2];
     if (v1 == nullptr)
     {
-        v1 = new VerticeGrafo(valor1, vertice1, peso);
+        v1 = new VerticeGrafo(valor1, vertice1);
         listaAdj[valor1] = v1;
     }
 
     if (v2 == nullptr)
     {
-        v2 = new VerticeGrafo(valor2, vertice2, peso);
+        v2 = new VerticeGrafo(valor2, vertice2);
         listaAdj[valor2] = v2;
     }
 

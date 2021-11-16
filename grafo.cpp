@@ -1,5 +1,6 @@
 #include <iostream>
 #include "grafo.h"
+
 using namespace std;
 
 Grafo::Grafo(int tam)
@@ -35,6 +36,7 @@ void Grafo::imprimirGrafo(int nVertice)
 void Grafo::buscaEmLargura(int raiz, int objetivo)
 {
     bool *explorados = new bool[tam]; // Cidades já visitadas.
+    vector<pair<int, int>> caminho;
 
     for (int i = 0; i < tam; i++) // Colocando todas as cidades como não exploradas.
         explorados[i] = false;
@@ -54,8 +56,20 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
         for (auto j : lista)
         {
             int val = j.second; // Cidades vizinhas.
+            caminho.push_back(make_pair(no, val));
             if (val == objetivo)
+            {
+                int indice = caminho.size() - 1;
+                cout << endl;
+                while (indice != raiz)
+                {
+                    cout << caminho[indice].first << endl;
+                    indice = caminho[indice].first;
+                }
+                cout << raiz << endl;
                 return;
+            }
+
             if (!explorados[val])
             {
                 explorados[val] = true; // Adicionando ao explorados.

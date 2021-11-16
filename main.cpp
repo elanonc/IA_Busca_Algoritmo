@@ -14,7 +14,7 @@
 #define Pitesti 9
 #define Craiova 10
 #define Mehadia 11
-#define Dobreta 12
+#define Drobeta 12
 #define Giurglu 13
 #define Urziceni 14
 #define Vaslui 15
@@ -45,14 +45,14 @@ int main()
     g.adicionar(Bucharest, Urziceni, 85);
     g.adicionar(Pitesti, Bucharest, 101);
     g.adicionar(Craiova, Pitesti, 138);
-    g.adicionar(Mehadia, Dobreta, 75);
-    g.adicionar(Dobreta, Craiova, 120);
+    g.adicionar(Mehadia, Drobeta, 75);
+    g.adicionar(Drobeta, Craiova, 120);
     g.adicionar(Urziceni, Vaslui, 142);
     g.adicionar(Urziceni, Mirsove, 98);
     g.adicionar(Mirsove, Eforie, 86);
     g.adicionar(Vaslui, lasi, 92);
     g.adicionar(lasi, Neamt, 97);
     g.imprimirGrafo(nVertice);
-    g.buscaEmLargura(Arad, Bucharest);
+    g.buscaEmLargura(Arad, RimnicuVilcea);
     return 0;
 }

@@ -23,9 +23,6 @@ public:
     struct No
     {
         No *pai;
-        int s;
-        // Constructor.
-        No(No *p, int s) : p(p), s(s) {}
     };
     typedef pair<double, No *> caminho;
 };

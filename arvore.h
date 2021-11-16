@@ -31,6 +31,11 @@ public:
         return estado;
     }
 
+    int getCustoDoCaminho()
+    {
+        return custoDoCaminho;
+    }
+
     // funções getters e setters
 
     No *getPai()
@@ -43,9 +48,14 @@ public:
         this->estado = estado;
     }
 
+    void setCustoDoCaminho(int custoDoCaminho)
+    {
+        this->custoDoCaminho = custoDoCaminho;
+    }
+
     void setPai(No *pai)
     {
-        pai = pai;
+        this->pai = pai;
     }
 };
 
@@ -63,6 +73,7 @@ public:
     {
         return raiz;
     }
+    void ajeitarCustoDoNo(No *no);
     void imprimir(No *no);
 };
 

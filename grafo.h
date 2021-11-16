@@ -13,6 +13,8 @@ using namespace std;
 
 class Grafo
 {
+
+private:
     int tam;
     vector<list<pair<double, int>>> listaAdj;
 
@@ -23,6 +25,26 @@ public:
     void imprimirGrafo(int nVertice);
     void buscaEmLargura(int raiz, int objetivo);
     void buscaEmLargura2(int raiz, int objetivo);
+
+    int getTam()
+    {
+        return tam;
+    }
+
+    vector<list<pair<double, int>>> *getListaAdj()
+    {
+        return &listaAdj;
+    }
+
+    void setTam(int tam)
+    {
+        this->tam = tam;
+    }
+
+    void setListaAdj(vector<list<pair<double, int>>> listaAdj)
+    {
+        this->listaAdj = listaAdj;
+    }
 };
 
 #endif

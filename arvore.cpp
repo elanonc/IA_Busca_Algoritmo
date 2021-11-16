@@ -17,14 +17,24 @@ No *Arvore::inserirNo(No *no, int estado)
 {
     No *novo_no = new No(estado); // Criando um novo nó.
     novo_no->setPai(no);          // Adicionando o pai ao filho.
+    ajeitarCustoDoNo(no);
     return novo_no;
 }
 
 void Arvore::imprimir(No *no)
 {
-    while (no->getPai() != nullptr)
+    while (no != nullptr)
     {
-        cout << no->getEstado() << endl;
+        cout << no->getEstado() << " custo: " << no->getCustoDoCaminho() << endl;
+        no = no->getPai();
+    }
+}
+
+void Arvore::ajeitarCustoDoNo(No *no)
+{
+    while (no != nullptr)
+    {
+        no->setCustoDoCaminho((no->getCustoDoCaminho()) + 1);
         no = no->getPai();
     }
 }

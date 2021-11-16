@@ -66,7 +66,7 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
             {
                 if (filho->getEstado() == objetivo)
                 {
-                    // arvore.imprimir(filho);
+                    arvore.imprimir(filho);
                     return;
                 }
             }

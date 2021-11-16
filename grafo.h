@@ -6,6 +6,8 @@
 #include <utility> // pair
 #include <vector>
 #include <queue>
+#include <string>
+#include "arvore.h"
 
 using namespace std;
 
@@ -20,11 +22,7 @@ public:
     void adicionar(int cidade1, int cidade2, double peso);
     void imprimirGrafo(int nVertice);
     void buscaEmLargura(int raiz, int objetivo);
-    struct No
-    {
-        No *pai;
-    };
-    typedef pair<double, No *> caminho;
+    void buscaEmLargura2(int raiz, int objetivo);
 };
 
 #endif

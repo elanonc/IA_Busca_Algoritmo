@@ -35,10 +35,52 @@ void Grafo::imprimirGrafo(int nVertice)
 
 void Grafo::buscaEmLargura(int raiz, int objetivo)
 {
+    Arvore arvore;
+    No *no;
+    queue<No *> borda; // É uma fila.
+    no = arvore.inserir(raiz);
+    bool *explorados = new bool[tam]; // Cidades já visitadas.
+    int estado;
+
+    for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
+        explorados[i] = false;
+
+    borda.push(arvore.getRaiz()); // iniciando a borda.
+    // cout << arvore.getRaiz()->getEstado() << endl;
+
+    while (!borda.empty())
+    {
+        // remover elemento da borda.
+        no = borda.front();
+        borda.pop();                        // retirando o que está a mais tempo na fila.
+        explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
+        // para cada ação aplicável em nó.estado
+
+        list<pair<double, int>> lista = listaAdj[no->getEstado()];
+        for (pair<double, int> j : lista)
+        {
+            estado = j.second; // Cidades vizinhas.
+            // cout << estado;
+            No *filho = arvore.inserirNo(no, estado);
+            if (!explorados[filho->getEstado()] /*|| borda.front() != filho*/)
+            {
+                if (filho->getEstado() == objetivo)
+                {
+                    // arvore.imprimir(filho);
+                    return;
+                }
+            }
+            borda.push(filho);
+        }
+    }
+}
+
+void Grafo::buscaEmLargura2(int raiz, int objetivo)
+{
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     vector<pair<int, int>> caminho;
 
-    for (int i = 0; i < tam; i++) // Colocando todas as cidades como não exploradas.
+    for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
         explorados[i] = false;
 
     queue<int> borda;        // É uma fila.
@@ -53,11 +95,12 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
         cout << no << " ";
         borda.pop();
         list<pair<double, int>> lista = listaAdj[no];
-        for (auto j : lista)
+        // auto
+        for (pair<double, int> j : lista)
         {
-            int val = j.second; // Cidades vizinhas.
-            caminho.push_back(make_pair(no, val));
-            if (val == objetivo)
+            int estado = j.second; // Cidades vizinhas.
+            caminho.push_back(make_pair(no, estado));
+            if (estado == objetivo)
             {
                 int indice = caminho.size() - 1;
                 cout << endl;
@@ -70,10 +113,10 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
                 return;
             }
 
-            if (!explorados[val])
+            if (!explorados[estado])
             {
-                explorados[val] = true; // Adicionando ao explorados.
-                borda.push(val);
+                explorados[estado] = true; // Adicionando ao explorados.
+                borda.push(estado);
             }
         }
     }

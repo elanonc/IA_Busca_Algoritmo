@@ -53,6 +53,6 @@ int main()
     g.adicionar(Vaslui, lasi, 92);
     g.adicionar(lasi, Neamt, 97);
     g.imprimirGrafo(nVertice);
-    g.buscaEmLargura(Arad, RimnicuVilcea);
+    g.buscaEmLargura2(Arad, Eforie);
     return 0;
 }

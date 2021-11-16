@@ -26,6 +26,8 @@ public:
         custoDoCaminho = 0;
     };
 
+    // funções getters e setters
+
     int getEstado()
     {
         return estado;
@@ -35,8 +37,6 @@ public:
     {
         return custoDoCaminho;
     }
-
-    // funções getters e setters
 
     No *getPai()
     {

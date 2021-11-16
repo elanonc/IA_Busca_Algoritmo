@@ -12,17 +12,17 @@ using namespace std;
 class Grafo
 {
     int tam;
-    vector<list<pair<double, int>>>listaAdj;
+    vector<list<pair<double, int>>> listaAdj;
 
 public:
     Grafo(int V); // Construtor
     ~Grafo();
     void adicionar(int cidade1, int cidade2, double peso);
     void imprimirGrafo(int nVertice);
-    void buscaEmLargura(int raiz, int destino);
+    void buscaEmLargura(int raiz, int objetivo);
     struct No
     {
-        No *p;
+        No *pai;
         int s;
         // Constructor.
         No(No *p, int s) : p(p), s(s) {}

@@ -32,28 +32,34 @@ void Grafo::imprimirGrafo(int nVertice)
     }
 }
 
-void Grafo::buscaEmLargura(int raiz, int destino)
+void Grafo::buscaEmLargura(int raiz, int objetivo)
 {
-    bool *visitado = new bool[tam];
-    for (int i = 0; i < tam; i++)
-        visitado[i] = false;
-    queue<int> fila;
-    visitado[raiz] = true;
-    fila.push(raiz);
+    bool *explorados = new bool[tam]; // Cidades já visitadas.
 
-    while (!fila.empty())
+    for (int i = 0; i < tam; i++) // Colocando todas as cidades como não exploradas.
+        explorados[i] = false;
+
+    queue<int> borda;        // É uma fila.
+    explorados[raiz] = true; // Colocando a raiz como explorada.
+    borda.push(raiz);        // iniciando a borda.
+    int no;
+
+    while (!borda.empty())
     {
-        raiz = fila.front();
-        cout << raiz << " ";
-        fila.pop();
-        list<pair<double, int>> lista = listaAdj[raiz];
+
+        no = borda.front(); // retirando o que está a mais tempo na fila.
+        cout << no << " ";
+        borda.pop();
+        list<pair<double, int>> lista = listaAdj[no];
         for (auto j : lista)
         {
-            int val = j.second;
-            if (!visitado[val])
+            int val = j.second; // Cidades vizinhas.
+            if (val == objetivo)
+                return;
+            if (!explorados[val])
             {
-                visitado[val] = true;
-                fila.push(val);
+                explorados[val] = true; // Adicionando ao explorados.
+                borda.push(val);
             }
         }
     }

@@ -53,6 +53,6 @@ int main()
     g.adicionar(Vaslui, lasi, 92);
     g.adicionar(lasi, Neamt, 97);
     g.imprimirGrafo(nVertice);
-    g.buscaEmLargura(lasi, Neamt);
+    g.buscaEmLargura(Arad, Bucharest);
     return 0;
 }

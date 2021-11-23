@@ -56,6 +56,54 @@ void Grafo::imprimirGrafo(int nVertice)
     }
 }
 
+bool estaNaFila(queue<No *> fila, int val)
+{
+
+    while (!fila.empty())
+    {
+        if (fila.front()->getEstado() == val)
+        {
+            return true;
+        }
+        fila.pop();
+    }
+    return false;
+}
+
+bool estaNaFila(priority_queue<No *> fila, int val)
+{
+
+    while (!fila.empty())
+    {
+        if (fila.top()->getEstado() == val)
+        {
+            return true;
+        }
+        fila.pop();
+    }
+    return false;
+}
+
+void estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val)
+{
+    No *valor;
+    int tam = fila->size();
+    for (int i = 0; i < tam; i++)
+    {
+
+        valor = fila->top();
+        if (valor->getEstado() == val->getEstado())
+        {
+            if (val->getCustoDoCaminho() > valor->getCustoDoCaminho())
+            {
+                valor = val;
+            }
+        }
+        fila->pop();
+        fila->push(valor);
+    }
+}
+
 void Grafo::buscaEmLargura(int raiz, int objetivo)
 {
     Arvore arvore;
@@ -74,6 +122,89 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
     {
 
         no = borda.front();                 // remover elemento da borda.
+        borda.pop();                        // retirando o que está a mais tempo na fila.
+        explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
+
+        // para cada ação aplicável em nó.estado
+        list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
+        for (pair<int, double> v : lista)
+        {
+            estado = v.first; // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado);
+            if (!explorados[filho->getEstado()] /*|| borda.front() != filho*/)
+            {
+                if (filho->getEstado() == objetivo)
+                {
+                    arvore.imprimir(filho);
+                    return;
+                }
+            }
+            borda.push(filho);
+        }
+    }
+    return;
+}
+
+void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
+{
+    Arvore arvore;
+    No *no;
+    priority_queue<No *> borda; // É uma fila.
+    no = arvore.inserir(raiz);
+    bool *explorados = new bool[tam]; // Cidades já visitadas.
+    int estado;
+
+    for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
+        explorados[i] = false;
+
+    borda.push(arvore.getRaiz()); // iniciando a borda.
+
+    while (!borda.empty())
+    {
+
+        no = borda.top(); // remover elemento da borda.
+        borda.pop();      // retirando o que está a mais tempo na fila.
+        if (no->getEstado() == objetivo)
+        {
+            arvore.imprimir(no);
+            return;
+        }
+        explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
+
+        // para cada ação aplicável em nó.estado
+        list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
+        for (pair<int, double> v : lista)
+        {
+            estado = v.first; // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado);
+            if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
+            {
+                borda.push(filho);
+            }
+            estaNaFilaComMaiorCusto(&borda, filho);
+        }
+    }
+    return;
+}
+
+void Grafo::buscaEmProfundidade(int raiz, int objetivo)
+{
+    Arvore arvore;
+    No *no;
+    stack<No *> borda; // É uma fila.
+    no = arvore.inserir(raiz);
+    bool *explorados = new bool[tam]; // Cidades já visitadas.
+    int estado;
+
+    for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
+        explorados[i] = false;
+
+    borda.push(arvore.getRaiz()); // iniciando a borda.
+
+    while (!borda.empty())
+    {
+
+        no = borda.top();                   // remover elemento da borda.
         borda.pop();                        // retirando o que está a mais tempo na fila.
         explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
 

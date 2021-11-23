@@ -54,6 +54,12 @@ int main()
     g.adicionar(" ", " ", Vaslui, lasi, 92);
     g.adicionar(" ", " ", lasi, Neamt, 97);
     g.imprimirGrafo(nVertice);
+    cout << "--------------------------------" << endl;
     g.buscaEmLargura(Arad, Zerind);
+    cout << "--------------------------------" << endl;
+    g.buscaDeCustoUniforme(Arad, Zerind);
+    cout << "--------------------------------" << endl;
+    g.buscaEmProfundidade(Arad, Zerind);
+    cout << "--------------------------------" << endl;
     return 0;
 }

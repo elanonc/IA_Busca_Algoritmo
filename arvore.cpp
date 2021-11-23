@@ -17,7 +17,7 @@ No *Arvore::inserirNo(No *no, int estado)
 {
     No *novo_no = new No(estado); // Criando um novo nó.
     novo_no->setPai(no);          // Adicionando o pai ao filho.
-    //ajeitarCustoDoNo(no);
+    ajeitarCustoDoNo(no);
     return novo_no;
 }
 

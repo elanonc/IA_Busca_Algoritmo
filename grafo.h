@@ -6,6 +6,7 @@
 #include <utility> // pair
 #include <vector>
 #include <queue>
+#include <stack> 
 #include <string>
 #include "arvore.h"
 
@@ -43,6 +44,8 @@ public:
     void adicionar(string vertice1, string vertice2, int valor1, int valor2, double peso);
     void imprimirGrafo(int nVertice);
     void buscaEmLargura(int raiz, int objetivo);
+    void buscaDeCustoUniforme(int raiz, int objetivo);
+    void buscaEmProfundidade(int raiz, int objetivo);
     void buscaEmLargura2(int raiz, int objetivo);
 
     int getTam()

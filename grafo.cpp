@@ -41,6 +41,16 @@ void Grafo::adicionar(string vertice1, string vertice2, int valor1, int valor2, 
     v2->adicionarVizinho(valor1, peso);
 }
 
+int Grafo::buscarPorNome(string val)
+{
+    for (VerticeGrafo *v : listaAdj)
+    {
+        if (v->vertice == val)
+            return v->valor;
+    }
+    return -1;
+}
+
 void Grafo::imprimirGrafo(int nVertice)
 {
 
@@ -56,12 +66,13 @@ void Grafo::imprimirGrafo(int nVertice)
     }
 }
 
-bool estaNaFila(queue<No *> fila, int val)
+bool Grafo::estaNaFila(queue<No *> fila, int val)
 {
-
+    No *valor;
     while (!fila.empty())
     {
-        if (fila.front()->getEstado() == val)
+        valor = fila.front();
+        if (valor->getEstado() == val)
         {
             return true;
         }
@@ -70,7 +81,7 @@ bool estaNaFila(queue<No *> fila, int val)
     return false;
 }
 
-bool estaNaFila(priority_queue<No *> fila, int val)
+bool Grafo::estaNaFila(priority_queue<No *> fila, int val)
 {
 
     while (!fila.empty())
@@ -84,24 +95,40 @@ bool estaNaFila(priority_queue<No *> fila, int val)
     return false;
 }
 
-void estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val)
+bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val)
 {
     No *valor;
     int tam = fila->size();
+    bool rt = false;
     for (int i = 0; i < tam; i++)
     {
 
         valor = fila->top();
         if (valor->getEstado() == val->getEstado())
         {
-            if (val->getCustoDoCaminho() > valor->getCustoDoCaminho())
+            if (val->getCustoDoCaminho() > valor->getCustoDoCaminho() && !rt)
             {
                 valor = val;
+                rt = true;
             }
         }
         fila->pop();
         fila->push(valor);
     }
+    return rt;
+}
+
+bool Grafo::estaNaPilha(stack<No *> pilha, int val)
+{
+    while (!pilha.empty())
+    {
+        if (pilha.top()->getEstado() == val)
+        {
+            return true;
+        }
+        pilha.pop();
+    }
+    return false;
 }
 
 void Grafo::buscaEmLargura(int raiz, int objetivo)
@@ -131,17 +158,18 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
         {
             estado = v.first; // Cidade vizinha.
             No *filho = arvore.inserirNo(no, estado);
-            if (!explorados[filho->getEstado()] /*|| borda.front() != filho*/)
+            if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)
                 {
                     arvore.imprimir(filho);
                     return;
                 }
+                borda.push(filho);
             }
-            borda.push(filho);
         }
     }
+    delete explorados;
     return;
 }
 
@@ -162,9 +190,9 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
     while (!borda.empty())
     {
 
-        no = borda.top(); // remover elemento da borda.
-        borda.pop();      // retirando o que está a mais tempo na fila.
-        if (no->getEstado() == objetivo)
+        no = borda.top();                // remover elemento da borda.
+        borda.pop();                     // retirando o que está a mais tempo na fila.
+        if (no->getEstado() == objetivo) // Retorna a solção.
         {
             arvore.imprimir(no);
             return;
@@ -175,15 +203,18 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
         list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado);
+            estado = v.first;                         // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado); // Criando um filho.
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 borda.push(filho);
             }
-            estaNaFilaComMaiorCusto(&borda, filho);
+            else if (estaNaFilaComMaiorCusto(&borda, filho)) // Yesterday, help, please.
+            {
+            };
         }
     }
+    delete explorados;
     return;
 }
 
@@ -214,17 +245,18 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
         {
             estado = v.first; // Cidade vizinha.
             No *filho = arvore.inserirNo(no, estado);
-            if (!explorados[filho->getEstado()] /*|| borda.front() != filho*/)
+            if (!explorados[filho->getEstado()] || estaNaPilha(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)
                 {
                     arvore.imprimir(filho);
                     return;
                 }
+                borda.push(filho);
             }
-            borda.push(filho);
         }
     }
+    delete explorados;
     return;
 }
 

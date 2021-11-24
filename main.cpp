@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "grafo.h"
+#include <string>
 // MAPEAMENTO DAS CIDADES
 
 #define Arad 0
@@ -30,6 +31,7 @@ int main()
 {
     int nVertice = 20; // numero de vertices
     Grafo g(nVertice);
+    string origem;
     g.adicionar("Arad", "Zerind", Arad, Zerind, 75);
     g.adicionar("Arad", "Sibiu", Arad, Sibiu, 140);
     g.adicionar("Arad", "Timisoara", Arad, Timisoara, 118);
@@ -53,16 +55,21 @@ int main()
     g.adicionar("Hirsova", "Eforie", Hirsova, Eforie, 86);
     g.adicionar("Vaslui", "Iasi", Vaslui, Iasi, 92);
     g.adicionar("Iasi", "Neamt", Iasi, Neamt, 97);
-    
-    
-    
     g.imprimirGrafo(nVertice);
-    cout << "--------------------------------" << endl;
-    g.buscaEmLargura(Arad, Zerind);
-    cout << "--------------------------------" << endl;
-    g.buscaDeCustoUniforme(Arad, Zerind);
-    cout << "--------------------------------" << endl;
-    g.buscaEmProfundidade(Arad, Zerind);
-    cout << "--------------------------------" << endl;
+    cin >> origem;
+    int result = g.buscarPorNome(origem);
+    if (result == -1)
+        cout << "Valor inexistente" << endl;
+    else
+    {
+        cout << "--------------------------------" << endl;
+        g.buscaEmLargura(result, Bucharest);
+        cout << "--------------------------------" << endl;
+        g.buscaDeCustoUniforme(result, Bucharest);
+        cout << "--------------------------------" << endl;
+        g.buscaEmProfundidade(result, Bucharest);
+        cout << "--------------------------------" << endl;
+    }
+
     return 0;
 }

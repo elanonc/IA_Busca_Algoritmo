@@ -136,7 +136,7 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
     Arvore arvore;
     No *no;
     queue<No *> borda; // É uma fila.
-    no = arvore.inserir(raiz);
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     int estado;
 
@@ -157,7 +157,7 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
         for (pair<int, double> v : lista)
         {
             estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado);
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice);
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)
@@ -178,7 +178,7 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
     Arvore arvore;
     No *no;
     priority_queue<No *> borda; // É uma fila.
-    no = arvore.inserir(raiz);
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     int estado;
 
@@ -203,8 +203,8 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
         list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            estado = v.first;                         // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado); // Criando um filho.
+            estado = v.first;                                                    // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice); // Criando um filho.
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 borda.push(filho);
@@ -223,7 +223,7 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
     Arvore arvore;
     No *no;
     stack<No *> borda; // É uma fila.
-    no = arvore.inserir(raiz);
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     int estado;
 
@@ -244,7 +244,7 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
         for (pair<int, double> v : lista)
         {
             estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado);
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice);
             if (!explorados[filho->getEstado()] || estaNaPilha(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)

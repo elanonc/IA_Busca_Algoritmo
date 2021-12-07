@@ -6,6 +6,7 @@
 #include <utility> // pair
 #include <vector>
 #include <queue>
+#include <stack>
 #include <string>
 
 using namespace std;
@@ -14,19 +15,26 @@ class No
 {
 
 private:
+    string nome;
     int estado;
     No *pai;
     int custoDoCaminho;
 
 public:
-    No(int estado)
+    No(int estado, string nome)
     {
+        this->nome = nome;
         this->estado = estado;
         pai = nullptr;
         custoDoCaminho = 0;
     };
 
     // funções getters e setters
+
+    string getNome()
+    {
+        return nome;
+    }
 
     int getEstado()
     {
@@ -41,6 +49,11 @@ public:
     No *getPai()
     {
         return pai;
+    }
+
+    void setNome(string nome)
+    {
+        this->nome = nome;
     }
 
     void setEstado(int estado)
@@ -67,14 +80,15 @@ private:
 
 public:
     Arvore();
-    No *inserir(int estado);
-    No *inserirNo(No *no, int estado);
+    No *inserir(int estado, string nome);
+    No *inserirNo(No *no, int estado, string nome);
     No *getRaiz()
     {
         return raiz;
     }
     void ajeitarCustoDoNo(No *no);
     void imprimir(No *no);
+     void imprimirInvertido(No *no);
 };
 
 #endif

@@ -57,21 +57,6 @@ public:
     {
         return tam;
     }
-    /*
-    vector<list<pair<double, int>>> *getListaAdj()
-    {
-        return &listaAdj;
-    }
-
-    void setTam(int tam)
-    {
-        this->tam = tam;
-    }
-
-    void setListaAdj(vector<list<pair<double, int>>> listaAdj)
-    {
-        this->listaAdj = listaAdj;
-    }*/
 };
 
 #endif

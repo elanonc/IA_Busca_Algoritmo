@@ -56,10 +56,13 @@ int main()
     g.adicionar("Vaslui", "Iasi", Vaslui, Iasi, 92);
     g.adicionar("Iasi", "Neamt", Iasi, Neamt, 97);
     g.imprimirGrafo(nVertice);
+    cout << "Por favor, digite a cidade de origem" << endl;
     cin >> origem;
     int result = g.buscarPorNome(origem);
     if (result == -1)
         cout << "Valor inexistente" << endl;
+    else if (result == 8)
+        cout << "Erro, Bucharest já é o nosso destino" << endl;
     else
     {
         cout << "--------------------------------" << endl;

@@ -30,6 +30,28 @@ using namespace std;
 int main()
 {
     int nVertice = 20; // numero de vertices
+    int valoresHeuristicos[] = {
+        366,
+        374,
+        253,
+        329,
+        380,
+        176,
+        193,
+        244,
+        0,
+        100,
+        160,
+        241,
+        242,
+        77,
+        80,
+        199,
+        151,
+        226,
+        234,
+        161
+    };
     Grafo g(nVertice);
     string origem;
     g.adicionar("Arad", "Zerind", Arad, Zerind, 75);
@@ -73,6 +95,5 @@ int main()
         g.buscaEmProfundidade(result, Bucharest);
         cout << "--------------------------------" << endl;
     }
-
     return 0;
 }

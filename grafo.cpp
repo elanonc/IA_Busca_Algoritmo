@@ -263,7 +263,7 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
 
 // Falta terminar
 
-void Grafo::buscaGulosa(int raiz, int objetivo)
+void Grafo::buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[])
 {
     Arvore arvore;
     No *no;
@@ -299,16 +299,17 @@ void Grafo::buscaGulosa(int raiz, int objetivo)
             {
                 borda.push(filho);
             }
-            else if (estaNaFilaComMaiorCusto(&borda, filho)) // Yesterday, help, please.
+            else
             {
-            };
+                estaNaFilaComMaiorCusto(&borda, filho);
+            }
         }
     }
     delete explorados;
     return;
 }
 
-void Grafo::buscaAEstrela(int raiz, int objetivo)
+void Grafo::buscaAEstrela(int raiz, int objetivo, int valoresHeuristicos[])
 {
     Arvore arvore;
     No *no;
@@ -344,9 +345,10 @@ void Grafo::buscaAEstrela(int raiz, int objetivo)
             {
                 borda.push(filho);
             }
-            else if (estaNaFilaComMaiorCusto(&borda, filho)) // Yesterday, help, please.
+            else
             {
-            };
+                estaNaFilaComMaiorCusto(&borda, filho);
+            }
         }
     }
     delete explorados;

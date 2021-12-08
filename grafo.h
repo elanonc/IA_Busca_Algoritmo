@@ -47,8 +47,8 @@ public:
     void buscaEmLargura(int raiz, int objetivo);
     void buscaDeCustoUniforme(int raiz, int objetivo);
     void buscaEmProfundidade(int raiz, int objetivo);
-    void buscaGulosa(int raiz, int objetivo);
-    void buscaAEstrela(int raiz, int objetivo);
+    void buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[]);
+    void buscaAEstrela(int raiz, int objetivo, int valoresHeuristicos[]);
     bool estaNaFila(queue<No *> fila, int val);
     bool estaNaFila(priority_queue<No *> fila, int val);
     bool estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val);

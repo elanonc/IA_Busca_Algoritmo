@@ -81,14 +81,13 @@ private:
 public:
     Arvore();
     No *inserir(int estado, string nome);
-    No *inserirNo(No *no, int estado, string nome);
+    No *inserirNo(No *no, int estado, string nome, double custo);
     No *getRaiz()
     {
         return raiz;
     }
-    void ajeitarCustoDoNo(No *no);
     void imprimir(No *no);
-     void imprimirInvertido(No *no);
+    void imprimirInvertido(No *no);
 };
 
 #endif

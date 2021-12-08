@@ -60,7 +60,7 @@ void Grafo::imprimirGrafo(int nVertice)
 
         for (pair<int, double> v : listaAdj[i]->vizinhos)
         {
-            cout << "[" << v.first << "," << v.second << " km]";
+            cout << "[" << v.first << ", " << v.second << " km]";
         }
         cout << endl;
     }
@@ -106,7 +106,7 @@ bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val)
         valor = fila->top();
         if (valor->getEstado() == val->getEstado())
         {
-            if (val->getCustoDoCaminho() > valor->getCustoDoCaminho() && !rt)
+            if (val->getCustoDoCaminho() < valor->getCustoDoCaminho() && !rt)
             {
                 valor = val;
                 rt = true;
@@ -157,7 +157,7 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
         for (pair<int, double> v : lista)
         {
             estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice);
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second);
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)
@@ -203,15 +203,16 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
         list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            estado = v.first;                                                    // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice); // Criando um filho.
+            estado = v.first;                                                              // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second); // Criando um filho.
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 borda.push(filho);
             }
-            else if (estaNaFilaComMaiorCusto(&borda, filho)) // Yesterday, help, please.
+            else
             {
-            };
+                estaNaFilaComMaiorCusto(&borda, filho);
+            }
         }
     }
     delete explorados;
@@ -244,7 +245,7 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
         for (pair<int, double> v : lista)
         {
             estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice);
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second);
             if (!explorados[filho->getEstado()] || estaNaPilha(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)
@@ -260,49 +261,94 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
     return;
 }
 
-void Grafo::buscaEmLargura2(int raiz, int objetivo)
+// Falta terminar
+
+void Grafo::buscaGulosa(int raiz, int objetivo)
 {
+    Arvore arvore;
+    No *no;
+    priority_queue<No *> borda; // É uma fila.
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
-    vector<pair<int, int>> caminho;
+    int estado;
 
     for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
         explorados[i] = false;
 
-    queue<int> borda;        // É uma fila.
-    explorados[raiz] = true; // Colocando a raiz como explorada.
-    borda.push(raiz);        // iniciando a borda.
-    int no;
+    borda.push(arvore.getRaiz()); // iniciando a borda.
 
     while (!borda.empty())
     {
 
-        no = borda.front(); // retirando o que está a mais tempo na fila.
-        cout << no << " ";
-        borda.pop();
-        list<pair<int, double>> lista = listaAdj[no]->vizinhos;
+        no = borda.top();                // remover elemento da borda.
+        borda.pop();                     // retirando o que está a mais tempo na fila.
+        if (no->getEstado() == objetivo) // Retorna a solção.
+        {
+            arvore.imprimir(no);
+            return;
+        }
+        explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
+
+        // para cada ação aplicável em nó.estado
+        list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            int estado = v.first; // Cidades vizinhas.
-            caminho.push_back(make_pair(no, estado));
-            if (estado == objetivo)
+            estado = v.first;                                                              // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second); // Criando um filho.
+            if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
-                int indice = caminho.size() - 1;
-                cout << endl;
-                while (indice != raiz)
-                {
-                    cout << caminho[indice].first << endl;
-                    indice = caminho[indice].first;
-                }
-                cout << raiz << endl;
-                return;
+                borda.push(filho);
             }
-
-            if (!explorados[estado])
+            else if (estaNaFilaComMaiorCusto(&borda, filho)) // Yesterday, help, please.
             {
-                explorados[estado] = true; // Adicionando ao explorados.
-                borda.push(estado);
-            }
+            };
         }
     }
-    cout << endl;
+    delete explorados;
+    return;
+}
+
+void Grafo::buscaAEstrela(int raiz, int objetivo)
+{
+    Arvore arvore;
+    No *no;
+    priority_queue<No *> borda; // É uma fila.
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
+    bool *explorados = new bool[tam]; // Cidades já visitadas.
+    int estado;
+
+    for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
+        explorados[i] = false;
+
+    borda.push(arvore.getRaiz()); // iniciando a borda.
+
+    while (!borda.empty())
+    {
+
+        no = borda.top();                // remover elemento da borda.
+        borda.pop();                     // retirando o que está a mais tempo na fila.
+        if (no->getEstado() == objetivo) // Retorna a solção.
+        {
+            arvore.imprimir(no);
+            return;
+        }
+        explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
+
+        // para cada ação aplicável em nó.estado
+        list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
+        for (pair<int, double> v : lista)
+        {
+            estado = v.first;                                                              // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second); // Criando um filho.
+            if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
+            {
+                borda.push(filho);
+            }
+            else if (estaNaFilaComMaiorCusto(&borda, filho)) // Yesterday, help, please.
+            {
+            };
+        }
+    }
+    delete explorados;
+    return;
 }

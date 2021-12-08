@@ -11,7 +11,7 @@
 #define Oradea 4
 #define Fagaras 5
 #define RimnicuVilcea 6
-#define Lugej 7
+#define Lugoj 7
 #define Bucharest 8
 #define Pitesti 9
 #define Craiova 10
@@ -36,14 +36,14 @@ int main()
     g.adicionar("Arad", "Sibiu", Arad, Sibiu, 140);
     g.adicionar("Arad", "Timisoara", Arad, Timisoara, 118);
     g.adicionar("Zerind", "Oradea", Zerind, Oradea, 71);
-    g.adicionar("Sibiu", "Fagaras", Sibiu, Fagaras, 90);
+    g.adicionar("Sibiu", "Fagaras", Sibiu, Fagaras, 99);
     g.adicionar("Sibiu", "RimnicuVilcea", Sibiu, RimnicuVilcea, 80);
-    g.adicionar("Timisoara", "Lugej", Timisoara, Lugej, 111);
+    g.adicionar("Timisoara", "Lugoj", Timisoara, Lugoj, 111);
     g.adicionar("Oradea", "Sibiu", Oradea, Sibiu, 151);
     g.adicionar("Fagaras", "Bucharest", Fagaras, Bucharest, 211);
     g.adicionar("RimnicuVilcea", "Pitesti", RimnicuVilcea, Pitesti, 97);
     g.adicionar("RimnicuVilcea", "Craiova", RimnicuVilcea, Craiova, 146);
-    g.adicionar("Lugej", "Mehadia", Lugej, Mehadia, 70);
+    g.adicionar("Lugoj", "Mehadia", Lugoj, Mehadia, 70);
     g.adicionar("Bucharest", "Giurgiu", Bucharest, Giurgiu, 90);
     g.adicionar("Bucharest", "Urziceni", Bucharest, Urziceni, 85);
     g.adicionar("Pitesti", "Bucharest", Pitesti, Bucharest, 101);
@@ -54,7 +54,7 @@ int main()
     g.adicionar("Urziceni", "Hirsova", Urziceni, Hirsova, 98);
     g.adicionar("Hirsova", "Eforie", Hirsova, Eforie, 86);
     g.adicionar("Vaslui", "Iasi", Vaslui, Iasi, 92);
-    g.adicionar("Iasi", "Neamt", Iasi, Neamt, 97);
+    g.adicionar("Iasi", "Neamt", Iasi, Neamt, 87);
     g.imprimirGrafo(nVertice);
     cout << "Por favor, digite a cidade de origem" << endl;
     cin >> origem;

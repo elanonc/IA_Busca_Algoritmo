@@ -50,8 +50,7 @@ int main()
         151,
         226,
         234,
-        161
-    };
+        161};
     Grafo g(nVertice);
     string origem;
     g.adicionar("Arad", "Zerind", Arad, Zerind, 75);

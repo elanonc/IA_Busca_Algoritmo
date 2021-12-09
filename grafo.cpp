@@ -246,7 +246,7 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
         {
             estado = v.first; // Cidade vizinha.
             No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second);
-            if (!explorados[filho->getEstado()] || estaNaPilha(borda, filho->getEstado()))
+            if (!explorados[filho->getEstado()])
             {
                 if (filho->getEstado() == objetivo)
                 {

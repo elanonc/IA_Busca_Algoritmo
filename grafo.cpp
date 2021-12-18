@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// construtor
 Grafo::Grafo(int tam)
 {
     this->tam = tam;
@@ -81,7 +82,7 @@ bool Grafo::estaNaFila(queue<No *> fila, int val)
     return false;
 }
 
-bool Grafo::estaNaFila(priority_queue<No *> fila, int val)
+bool Grafo::estaNaFila(priority_queue<No *, vector<No *>, porCusto> fila, int val)
 {
 
     while (!fila.empty())
@@ -95,7 +96,44 @@ bool Grafo::estaNaFila(priority_queue<No *> fila, int val)
     return false;
 }
 
-bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val)
+bool Grafo::estaNaFila(priority_queue<No *, vector<No *>, porEstimativa> fila, int val)
+{
+
+    while (!fila.empty())
+    {
+        if (fila.top()->getEstado() == val)
+        {
+            return true;
+        }
+        fila.pop();
+    }
+    return false;
+}
+
+bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *, vector<No *>, porCusto> *fila, No *val)
+{
+    No *valor;
+    int tam = fila->size();
+    bool rt = false;
+    for (int i = 0; i < tam; i++)
+    {
+
+        valor = fila->top();
+        if (valor->getEstado() == val->getEstado())
+        {
+            if (val->getCustoDoCaminho() < valor->getCustoDoCaminho() && !rt)
+            {
+                valor = val;
+                rt = true;
+            }
+        }
+        fila->pop();
+        fila->push(valor);
+    }
+    return rt;
+}
+
+bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *, vector<No *>, porEstimativa> *fila, No *val)
 {
     No *valor;
     int tam = fila->size();
@@ -133,11 +171,11 @@ bool Grafo::estaNaPilha(stack<No *> pilha, int val)
 
 void Grafo::buscaEmLargura(int raiz, int objetivo)
 {
-    Arvore arvore;
+    Arvore arvore; // iniciando a arvore.
     No *no;
-    queue<No *> borda; // É uma fila.
-    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
-    bool *explorados = new bool[tam]; // Cidades já visitadas.
+    queue<No *> borda;                                  // É uma fila.
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice); // inserindo o nó raiz na arvore.
+    bool *explorados = new bool[tam];                   // Cidades já visitadas.
     int estado;
 
     for (int i = 1; i < tam; i++) // Colocando todas as cidades como não exploradas.
@@ -150,14 +188,14 @@ void Grafo::buscaEmLargura(int raiz, int objetivo)
 
         no = borda.front();                 // remover elemento da borda.
         borda.pop();                        // retirando o que está a mais tempo na fila.
-        explorados[no->getEstado()] = true; // Colocando a raiz como explorada.
+        explorados[no->getEstado()] = true; // Colocando nó como explorada.
 
         // para cada ação aplicável em nó.estado
-        list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
+        list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos; // Vizinhos do nó.
         for (pair<int, double> v : lista)
         {
             estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second);
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second + no->getCustoDoCaminho());
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 if (filho->getEstado() == objetivo)
@@ -177,7 +215,7 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
 {
     Arvore arvore;
     No *no;
-    priority_queue<No *> borda; // É uma fila.
+    priority_queue<No *, vector<No *>, porCusto> borda; // É uma fila.
     no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     int estado;
@@ -190,8 +228,9 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
     while (!borda.empty())
     {
 
-        no = borda.top();                // remover elemento da borda.
-        borda.pop();                     // retirando o que está a mais tempo na fila.
+        no = borda.top(); // remover elemento da borda.
+        borda.pop();      // retirando o que está a mais tempo na fila.
+
         if (no->getEstado() == objetivo) // Retorna a solção.
         {
             arvore.imprimir(no);
@@ -203,8 +242,8 @@ void Grafo::buscaDeCustoUniforme(int raiz, int objetivo)
         list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            estado = v.first;                                                              // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second); // Criando um filho.
+            estado = v.first;                                                                                        // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second + no->getCustoDoCaminho()); // Criando um filho.
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 borda.push(filho);
@@ -245,7 +284,7 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
         for (pair<int, double> v : lista)
         {
             estado = v.first; // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second);
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second + no->getCustoDoCaminho());
             if (!explorados[filho->getEstado()])
             {
                 if (filho->getEstado() == objetivo)
@@ -261,14 +300,13 @@ void Grafo::buscaEmProfundidade(int raiz, int objetivo)
     return;
 }
 
-// Falta terminar
-
-void Grafo::buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[])
+void Grafo::buscaGulosa(int raiz, int objetivo, map<string, int> valoresHeuristicos)
 {
     Arvore arvore;
     No *no;
-    priority_queue<No *> borda; // É uma fila.
-    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
+    priority_queue<No *, vector<No *>, porEstimativa> borda; // É uma fila.
+
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice, valoresHeuristicos[listaAdj[raiz]->vertice]);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     int estado;
 
@@ -280,8 +318,9 @@ void Grafo::buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[])
     while (!borda.empty())
     {
 
-        no = borda.top();                // remover elemento da borda.
-        borda.pop();                     // retirando o que está a mais tempo na fila.
+        no = borda.top(); // remover elemento da borda.
+        borda.pop();      // retirando o que está a mais tempo na fila.
+
         if (no->getEstado() == objetivo) // Retorna a solção.
         {
             arvore.imprimir(no);
@@ -293,8 +332,8 @@ void Grafo::buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[])
         list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            estado = v.first;                                                              // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second); // Criando um filho.
+            estado = v.first;                                                                                                                                       // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second + no->getCustoDoCaminho(), valoresHeuristicos[listaAdj[estado]->vertice]); // Criando um filho.
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 borda.push(filho);
@@ -309,12 +348,13 @@ void Grafo::buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[])
     return;
 }
 
-void Grafo::buscaAEstrela(int raiz, int objetivo, int valoresHeuristicos[])
+void Grafo::buscaAEstrela(int raiz, int objetivo, map<string, int> valoresHeuristicos)
 {
     Arvore arvore;
     No *no;
-    priority_queue<No *> borda; // É uma fila.
-    no = arvore.inserir(raiz, listaAdj[raiz]->vertice);
+    priority_queue<No *, vector<No *>, porEstimativa> borda; // É uma fila.
+
+    no = arvore.inserir(raiz, listaAdj[raiz]->vertice, valoresHeuristicos[listaAdj[raiz]->vertice]);
     bool *explorados = new bool[tam]; // Cidades já visitadas.
     int estado;
 
@@ -326,8 +366,9 @@ void Grafo::buscaAEstrela(int raiz, int objetivo, int valoresHeuristicos[])
     while (!borda.empty())
     {
 
-        no = borda.top();                // remover elemento da borda.
-        borda.pop();                     // retirando o que está a mais tempo na fila.
+        no = borda.top(); // remover elemento da borda.
+        borda.pop();      // retirando o que está a mais tempo na fila.
+
         if (no->getEstado() == objetivo) // Retorna a solção.
         {
             arvore.imprimir(no);
@@ -339,8 +380,10 @@ void Grafo::buscaAEstrela(int raiz, int objetivo, int valoresHeuristicos[])
         list<pair<int, double>> lista = listaAdj[no->getEstado()]->vizinhos;
         for (pair<int, double> v : lista)
         {
-            estado = v.first;                                                              // Cidade vizinha.
-            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second); // Criando um filho.
+            estado = v.first; // Cidade vizinha.
+            No *filho = arvore.inserirNo(no, estado, listaAdj[estado]->vertice, v.second + no->getCustoDoCaminho(),
+                                         v.second + no->getCustoDoCaminho() +
+                                             valoresHeuristicos[listaAdj[estado]->vertice]); // Criando um filho.
             if (!explorados[filho->getEstado()] || estaNaFila(borda, filho->getEstado()))
             {
                 borda.push(filho);

@@ -2,6 +2,7 @@
 #include <vector>
 #include "grafo.h"
 #include <string>
+#include <map>
 // MAPEAMENTO DAS CIDADES
 
 #define Arad 0
@@ -30,27 +31,106 @@ using namespace std;
 int main()
 {
     int nVertice = 20; // numero de vertices
-    int valoresHeuristicos[] = {
-        366,
-        374,
-        253,
-        329,
-        380,
-        176,
-        193,
-        244,
-        0,
-        100,
-        160,
-        241,
-        242,
-        77,
-        80,
-        199,
-        151,
-        226,
-        234,
-        161};
+    map<string, int> valoresHeuristicos =
+        {{
+             "Arad",
+             366,
+
+         },
+         {
+             "Zerid",
+             374,
+
+         },
+         {
+             "Sibiu",
+             253,
+
+         },
+         {
+             "Timisoara",
+             329,
+
+         },
+         {
+             "Oradea",
+             380,
+
+         },
+         {
+             "Fagaras",
+             176,
+
+         },
+         {
+             "RimnicuVilcea",
+             193,
+
+         },
+         {
+             "Lugoj",
+             244,
+
+         },
+         {
+             "Bucharest",
+             0,
+
+         },
+         {
+             "Pitesti",
+             100,
+
+         },
+         {
+             "Craiova",
+             160,
+
+         },
+         {
+             "Mehadia",
+             241,
+
+         },
+         {
+             "Drobeta",
+             242,
+
+         },
+         {
+             "Giurgiu",
+             77,
+
+         },
+         {
+             "Urziceni ",
+             80,
+
+         },
+         {
+             "Vaslui",
+             199,
+
+         },
+         {
+             "Hirsova",
+             151,
+
+         },
+         {
+             "Iasi",
+             226,
+
+         },
+         {
+             "Neamt",
+             234,
+
+         },
+         {
+             "Eforie",
+             161,
+         }};
     Grafo g(nVertice);
     string origem;
     g.adicionar("Arad", "Zerind", Arad, Zerind, 75);
@@ -92,6 +172,10 @@ int main()
         g.buscaDeCustoUniforme(result, Bucharest);
         cout << "--------------------------------" << endl;
         g.buscaEmProfundidade(result, Bucharest);
+        cout << "--------------------------------" << endl;
+        g.buscaGulosa(result, Bucharest, valoresHeuristicos);
+        cout << "--------------------------------" << endl;
+        g.buscaAEstrela(result, Bucharest, valoresHeuristicos);
         cout << "--------------------------------" << endl;
     }
     return 0;

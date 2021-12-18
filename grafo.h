@@ -9,6 +9,7 @@
 #include <stack>
 #include <string>
 #include "arvore.h"
+#include <map>
 
 using namespace std;
 
@@ -47,11 +48,13 @@ public:
     void buscaEmLargura(int raiz, int objetivo);
     void buscaDeCustoUniforme(int raiz, int objetivo);
     void buscaEmProfundidade(int raiz, int objetivo);
-    void buscaGulosa(int raiz, int objetivo, int valoresHeuristicos[]);
-    void buscaAEstrela(int raiz, int objetivo, int valoresHeuristicos[]);
+    void buscaGulosa(int raiz, int objetivo, map<string, int> valoresHeuristicos);
+    void buscaAEstrela(int raiz, int objetivo, map<string, int> valoresHeuristicos);
     bool estaNaFila(queue<No *> fila, int val);
-    bool estaNaFila(priority_queue<No *> fila, int val);
-    bool estaNaFilaComMaiorCusto(priority_queue<No *> *fila, No *val);
+    bool estaNaFila(priority_queue<No *, vector<No *>, porCusto> fila, int val);
+    bool estaNaFilaComMaiorCusto(priority_queue<No *, vector<No *>, porCusto> *fila, No *val);
+    bool estaNaFila(priority_queue<No *, vector<No *>, porEstimativa> fila, int val);
+    bool estaNaFilaComMaiorCusto(priority_queue<No *, vector<No *>, porEstimativa> *fila, No *val);
     bool estaNaPilha(stack<No *> pilha, int val);
 
     int getTam()

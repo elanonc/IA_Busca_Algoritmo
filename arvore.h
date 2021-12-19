@@ -11,23 +11,53 @@
 
 using namespace std;
 
+// Estrutura Nó
 class No
 {
 
 private:
-    string nome;
-    int estado;
-    double custoDoCaminho;
-    double estimativa;
-    No *pai;
+    string nome;           // Nome que o nó corresponde.
+    int estado;            // O estado a que o nó corresponde.
+    double custoDoCaminho; // O custo de sair do estado inicial e alcançar o nó.
+    double estimativa;     // O custo de sair do estado inicial e alcançar o nó por uma estimativa.
+    No *pai;               // o nó na árvore que gerou esse nó.
 
 public:
+    // Construtor
     No(int estado, string nome)
     {
-        this->nome = nome;
         this->estado = estado;
+        this->nome = nome;
         pai = nullptr;
         custoDoCaminho = 0;
+        estimativa = 0;
+    };
+    // Construtor
+    No(int estado, string nome, double estimativa)
+    {
+        this->estado = estado;
+        this->nome = nome;
+        custoDoCaminho = 0;
+        pai = nullptr;
+        this->estimativa = estimativa;
+    };
+    // Construtor
+    No(int estado, string nome, double custoDoCaminho, No *pai)
+    {
+        this->estado = estado;
+        this->nome = nome;
+        this->custoDoCaminho = custoDoCaminho;
+        this->pai = pai;
+    };
+    // Construtor
+    No(int estado, string nome, double custoDoCaminho, double estimativa, No *pai)
+    {
+        this->estado = estado;
+        this->nome = nome;
+        this->pai = nullptr;
+        this->custoDoCaminho = custoDoCaminho;
+        this->estimativa = estimativa;
+        this->pai = pai;
     };
 
     // funções getters e setters
@@ -117,6 +147,8 @@ public:
     }
     void imprimir(No *no);
     void imprimirInvertido(No *no);
+    void imprimirComEstimativa(No *no);
+    void imprimirInvertidoComEstimativa(No *no);
 };
 
 #endif

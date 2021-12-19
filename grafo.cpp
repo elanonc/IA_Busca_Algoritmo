@@ -14,6 +14,7 @@ Grafo::Grafo(int tam)
     }
 }
 
+// Destrutor
 Grafo::~Grafo()
 {
     for (int i = 0; i < tam; i++)
@@ -23,6 +24,7 @@ Grafo::~Grafo()
     }
 }
 
+// Adiciona vertice ao Grafo
 void Grafo::adicionar(string vertice1, string vertice2, int valor1, int valor2, double peso)
 {
     VerticeGrafo *v1 = listaAdj[valor1], *v2 = listaAdj[valor2];
@@ -61,7 +63,7 @@ void Grafo::imprimirGrafo(int nVertice)
 
         for (pair<int, double> v : listaAdj[i]->vizinhos)
         {
-            cout << "[" << v.first << ", " << v.second << " km]";
+            cout << "[" << v.first << ", " << listaAdj[v.first]->vertice << ", " << v.second << " km]";
         }
         cout << endl;
     }
@@ -112,55 +114,56 @@ bool Grafo::estaNaFila(priority_queue<No *, vector<No *>, porEstimativa> fila, i
 
 bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *, vector<No *>, porCusto> *fila, No *val)
 {
-    No *valor;
+    No *elemento;
     int tam = fila->size();
-    bool rt = false;
+    bool resposta = false;
     for (int i = 0; i < tam; i++)
     {
-
-        valor = fila->top();
-        if (valor->getEstado() == val->getEstado())
+        elemento = fila->top();
+        if (elemento->getEstado() == val->getEstado())
         {
-            if (val->getCustoDoCaminho() < valor->getCustoDoCaminho() && !rt)
+            if (val->getCustoDoCaminho() < elemento->getCustoDoCaminho() && !resposta)
             {
-                valor = val;
-                rt = true;
+                elemento = val;
+                resposta = true;
             }
         }
         fila->pop();
-        fila->push(valor);
+        fila->push(elemento);
     }
-    return rt;
+    return resposta;
 }
 
 bool Grafo::estaNaFilaComMaiorCusto(priority_queue<No *, vector<No *>, porEstimativa> *fila, No *val)
 {
-    No *valor;
+    No *elemento;
     int tam = fila->size();
-    bool rt = false;
+    bool resposta = false;
     for (int i = 0; i < tam; i++)
     {
 
-        valor = fila->top();
-        if (valor->getEstado() == val->getEstado())
+        elemento = fila->top();
+        if (elemento->getEstado() == val->getEstado())
         {
-            if (val->getCustoDoCaminho() < valor->getCustoDoCaminho() && !rt)
+            if (val->getCustoDoCaminho() < elemento->getCustoDoCaminho() && !resposta)
             {
-                valor = val;
-                rt = true;
+                elemento = val;
+                resposta = true;
             }
         }
         fila->pop();
-        fila->push(valor);
+        fila->push(elemento);
     }
-    return rt;
+    return resposta;
 }
 
 bool Grafo::estaNaPilha(stack<No *> pilha, int val)
 {
+    No *elemento;
     while (!pilha.empty())
     {
-        if (pilha.top()->getEstado() == val)
+        elemento = pilha.top();
+        if (elemento->getEstado() == val)
         {
             return true;
         }

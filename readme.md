@@ -13,3 +13,6 @@
 
 
 c++ .\main.cpp .\grafo.cpp .\arvore.cpp
+
+
+g++ *.cpp

@@ -13,19 +13,22 @@
 
 using namespace std;
 
+// Vertice do Grafo
 class VerticeGrafo
 {
 public:
-    int valor;
-    string vertice;
+    int valor;                        // Valor do grafo.
+    string vertice;                   // Vertice.
+    list<pair<int, double>> vizinhos; // Lista de vizinhos.
 
-    list<pair<int, double>> vizinhos;
+    // Construtor
     VerticeGrafo(int valor, string vertice)
     {
         this->valor = valor;
         this->vertice = vertice;
     }
 
+    // Adiciona um vizinho ao vertice.
     void adicionarVizinho(int valor, double peso)
     {
         vizinhos.push_back(make_pair(valor, peso));
@@ -60,6 +63,11 @@ public:
     int getTam()
     {
         return tam;
+    }
+
+    vector<VerticeGrafo *> *getlistaAdj()
+    {
+        return &listaAdj;
     }
 };
 

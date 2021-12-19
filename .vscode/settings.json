@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "xstring": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp"
     }
 }

@@ -1,136 +1,8 @@
-#include <iostream>
-#include <vector>
-#include "grafo.h"
-#include <string>
-#include <map>
-// MAPEAMENTO DAS CIDADES
-
-#define Arad 0
-#define Zerind 1
-#define Sibiu 2
-#define Timisoara 3
-#define Oradea 4
-#define Fagaras 5
-#define RimnicuVilcea 6
-#define Lugoj 7
-#define Bucharest 8
-#define Pitesti 9
-#define Craiova 10
-#define Mehadia 11
-#define Drobeta 12
-#define Giurgiu 13
-#define Urziceni 14
-#define Vaslui 15
-#define Hirsova 16
-#define Iasi 17
-#define Neamt 18
-#define Eforie 19
-
-using namespace std;
+#include "variaveis.h"
 
 int main()
 {
     int nVertice = 20; // numero de vertices
-    map<string, int> valoresHeuristicos =
-        {{
-             "Arad",
-             366,
-
-         },
-         {
-             "Zerid",
-             374,
-
-         },
-         {
-             "Sibiu",
-             253,
-
-         },
-         {
-             "Timisoara",
-             329,
-
-         },
-         {
-             "Oradea",
-             380,
-
-         },
-         {
-             "Fagaras",
-             176,
-
-         },
-         {
-             "RimnicuVilcea",
-             193,
-
-         },
-         {
-             "Lugoj",
-             244,
-
-         },
-         {
-             "Bucharest",
-             0,
-
-         },
-         {
-             "Pitesti",
-             100,
-
-         },
-         {
-             "Craiova",
-             160,
-
-         },
-         {
-             "Mehadia",
-             241,
-
-         },
-         {
-             "Drobeta",
-             242,
-
-         },
-         {
-             "Giurgiu",
-             77,
-
-         },
-         {
-             "Urziceni ",
-             80,
-
-         },
-         {
-             "Vaslui",
-             199,
-
-         },
-         {
-             "Hirsova",
-             151,
-
-         },
-         {
-             "Iasi",
-             226,
-
-         },
-         {
-             "Neamt",
-             234,
-
-         },
-         {
-             "Eforie",
-             161,
-         }};
     Grafo g(nVertice);
     string origem;
     g.adicionar("Arad", "Zerind", Arad, Zerind, 75);
@@ -156,6 +28,7 @@ int main()
     g.adicionar("Hirsova", "Eforie", Hirsova, Eforie, 86);
     g.adicionar("Vaslui", "Iasi", Vaslui, Iasi, 92);
     g.adicionar("Iasi", "Neamt", Iasi, Neamt, 87);
+    cout << endl;
     g.imprimirGrafo(nVertice);
     cout << "Por favor, digite a cidade de origem" << endl;
     cin >> origem;
@@ -166,17 +39,23 @@ int main()
         cout << "Erro, Bucharest já é o nosso destino" << endl;
     else
     {
-        cout << "--------------------------------" << endl;
+        cout << endl;
+        cout << "--------------Em Largura------------------" << endl;
         g.buscaEmLargura(result, Bucharest);
-        cout << "--------------------------------" << endl;
+        cout << endl;
+        cout << "--------------Custo Uniforme--------------" << endl;
         g.buscaDeCustoUniforme(result, Bucharest);
-        cout << "--------------------------------" << endl;
+        cout << endl;
+        cout << "--------------Em Profundidade-------------" << endl;
         g.buscaEmProfundidade(result, Bucharest);
-        cout << "--------------------------------" << endl;
+        cout << endl;
+        cout << "--------------Gulosa----------------------" << endl;
         g.buscaGulosa(result, Bucharest, valoresHeuristicos);
-        cout << "--------------------------------" << endl;
+        cout << endl;
+        cout << "--------------A*--------------------------" << endl;
         g.buscaAEstrela(result, Bucharest, valoresHeuristicos);
         cout << "--------------------------------" << endl;
+        cout << endl;
     }
     return 0;
 }

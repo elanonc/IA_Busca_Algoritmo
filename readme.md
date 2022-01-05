@@ -11,6 +11,8 @@
 
 - Implementação - Busca em Profundidade
 
+- Implementação - Busca Gulosa e A*
+
 
 c++ .\main.cpp .\grafo.cpp .\arvore.cpp
 
